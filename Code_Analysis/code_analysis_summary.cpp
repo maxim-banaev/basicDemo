@@ -19,19 +19,63 @@ namespace analysis_sum {
 
 //==========================================================
 
+    struct Data
+    {
+        void activity();
+        static int num;
+    };
+
+    Data CreateData() { return Data(); }
+
+    void ActivateData()
+    {
+        CreateData().activity();
+    }
+
+    int Data::num = 1;
+
+    void Data::activity()
+    {
+        num = 42;
+    }
+
+//==========================================================
+
+    template<typename T>
+    void Foo(T, typename T::inner_type * = nullptr);
+
+    template<typename T>
+    decltype(T().Method()) Bar(T);
+
+    struct X {
+        using inner_type = void;
+        static void Method() {}
+    };
+
+    struct Y {};
+
+    void CallFooBar(X x, Y y) {
+        Foo(x);
+        Foo(y);
+        Bar(x);
+        Bar(y);
+    }
+
+//==========================================================
+
     void wrongFormatSpecifiers(int x, char *y) {
         printf("Input param: %s, %d", x, y);
     }
 
 //==========================================================
 
-    struct MyClass {
+    struct VarCl {
         int var;
         std::string name;
     };
 
-    void checkParam(MyClass *cl) {
-        MyClass *cl;
+    void checkParam(VarCl *cl) {
+        VarCl *cl;
 
         //...
     }
@@ -161,6 +205,15 @@ namespace analysis_sum {
     public:
         int someMethod(const int x, const int factor = 0) const override {
             return x * x * factor;
+        }
+    };
+
+    class Check {
+    private:
+        std::vector<int> vec;
+    public:
+        bool empty(int num) const {
+            return num % 2;
         }
     };
 }  // namespace analysis_sum
