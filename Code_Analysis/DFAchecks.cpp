@@ -105,3 +105,17 @@ bool Sample4(Ball& ball, CollisionType type) {
         return false;
     }
 }
+
+//==========================================================
+
+struct node {
+    int c;
+    node* next;
+};
+
+void checkDangling() {
+    node* head = new node[10]();
+    for (node* p = head; p != nullptr; p = p->next) {
+        delete p;
+    }
+}
