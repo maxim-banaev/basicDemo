@@ -30,8 +30,6 @@ public:
     virtual ~Foo() {
         std::cout << "Run ~Foo()" << std::endl;
     };
-
-
 };
 
 void bar(Foo &f) {
